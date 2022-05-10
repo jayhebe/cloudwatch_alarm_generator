@@ -21,38 +21,44 @@ d. A trail for logging all API calls.
 e. Additional S3 bucket policy, SNS policy and IAM role to make everything working properly.
 
 ### 3.2 Parameters
-CloudwatchSNSTopicARN - An existing SNS topic which will be used as the notification for the CloudWatch alarm, in ARN format.
-LambdaDeploymentPackageName - The lambda deployment package name, the default value is cloudwatch_alarm_generator.zip which the same as the file name in packages folder.
-LambdaDeploymentS3BucketName - An existing S3 bucket which will be used to upload the lambda deployment package.
-LambdaFunctionName - The lambda function name, the default value is cloudwatch-alarm-generator.
-LambdaRoleName - The role for lambda function which including the permissions of read file from S3 bucket, creating alarms in CloudWatch etc.
-S3BucketName - The S3 bucket for CloudTrail logs, **please note this bucket will be created by CloudFormation, so the bucket name should be globally unique, otherwise the CloudFormation will report that the specified resource already exists.**
-S3KeyPrefix - This parameter is optional, if you want to use prefix to organize objects, you can specify this value.
-SnsTopicName - The SNS notification for CloudTrail logs, it will also be created by CloudFormation, the default value is cloudtrail-sns-topic.
-TrailName - The CloudTrail name, the default value is management-events.
+* CloudwatchSNSTopicARN - An existing SNS topic which will be used as the notification for the CloudWatch alarm, in ARN format.
+* LambdaDeploymentPackageName - The lambda deployment package name, the default value is cloudwatch_alarm_generator.zip which the same as the file name in packages folder.
+* LambdaDeploymentS3BucketName - An existing S3 bucket which will be used to upload the lambda deployment package.
+* LambdaFunctionName - The lambda function name, the default value is cloudwatch-alarm-generator.
+* LambdaRoleName - The role for lambda function which including the permissions of read file from S3 bucket, creating alarms in CloudWatch etc.
+* S3BucketName - The S3 bucket for CloudTrail logs, **please note this bucket will be created by CloudFormation, so the bucket name should be globally unique, otherwise the CloudFormation will report that the specified resource already exists.**
+* S3KeyPrefix - This parameter is optional, if you want to use prefix to organize objects, you can specify this value.
+* SnsTopicName - The SNS notification for CloudTrail logs, it will also be created by CloudFormation, the default value is cloudtrail-sns-topic.
+* TrailName - The CloudTrail name, the default value is management-events.
 
 ## 4. Manually Deployment
 You can also opt to deployment the componments manually due to maybe you want to make everything in control. This section will describe all the steps in details. According to your situation, you can start from any part.
 a. Create a trail from CloudTrail console or AWS CLI, specify a S3 bucket (create a new one or choose existing) to save the logs, meantime enable the SNS notification delivery.
 b. Create a Lambda function and upload the deployment package. In the Environment variables of Configuration tab, create a variable which has 'cloudwatch_alarm_sns_topic' as Key, and the SNS topic ARN for CloudWatch alarm notification as Value. A new Lambda function role will be created as well. You have to change and add the following permissions in the role policy:
 * s3:GetObject permission of your CloudTrail log bucket:
+```json
 {
     "Effect": "Allow",
     "Action": "s3:GetObject",
     "Resource": "arn:aws:s3:::{bucket name}/*"
 }
+```
 * cloudwatch:PutMetricAlarm permission of your CloudWatch:
+```json
 {
     "Effect": "Allow",
     "Action": "cloudwatch:PutMetricAlarm",
     "Resource": "arn:aws:cloudwatch:{region}:{account id}:*"
 }
+```
 * ec2:DescribeInstanceTypes permission of your EC2 instance.
+```json
 {
     "Effect": "Allow",
     "Action": "ec2:DescribeInstanceTypes",
     "Resource": "*"
 }
+```
 c. If you want to fine-tune the threshold of the alarm, at the time of this writing, it is not good enough - you have to change the code in lambda_function.py file. The details of each variable is described as below:
 * ec2_cpu_threshold_percentage - Self-explanation, the EC2 CPU percentage in integer.
 * ec2_memory_threshold_percentage - Self-explanation, the EC2 memory percentage in integer.
