@@ -88,5 +88,5 @@ b. This solution is only used for region-wide which means that all resources sho
 
 ## 6. Change Logs
 | Date | Version | Author | Comments |
-| ---- | ---- | ---- | ---- |
+| :----: | :----: | :----: | :----: |
 | 2022-05-10 | 0.1 | Jay | Initial version |
