@@ -87,5 +87,5 @@ More features are under development.
 b. This solution is only used for region-wide which means that all resources should be located in the same region of the same AWS account. Cross-region or organization trail feature might be supported in the future.
 
 ## 6. Change Logs
-|Date|Version|Author|Comments|
-|2022-05-10|0.1|Jay|Initial version|
+| Date | Version | Author | Comments |
+| 2022-05-10 | 0.1 | Jay | Initial version |
