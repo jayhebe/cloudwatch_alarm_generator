@@ -10,14 +10,14 @@ The CloudTrail will capture all the API calls and store the logs in a S3 bucket,
 ## 3. Deployments
 ### 3.1 Prerequisites
 In the deployments folder, there is a CloudFormation json file. To use this CloudFormation file, the following prerequisites should be satisfied:
-a. You should have an existing S3 bucket which will be used to upload the lambda deployment package in the packages folder.
-b. You should have an existing SNS topic which will be used as the notification for the CloudWatch alarm.
+a. You should have an existing S3 bucket which will be used to upload the lambda deployment package in the packages folder.  
+b. You should have an existing SNS topic which will be used as the notification for the CloudWatch alarm.  
 
-The CloudFormation will primarily create the following resources:
-a. A S3 bucket for CloudTrail log files.
-b. A SNS topic for CloudTrail SNS notification.
-c. A Lambda function for creating CloudWatch alarms.
-d. A trail for logging all API calls.
+The CloudFormation will primarily create the following resources:  
+a. A S3 bucket for CloudTrail log files.  
+b. A SNS topic for CloudTrail SNS notification.  
+c. A Lambda function for creating CloudWatch alarms.  
+d. A trail for logging all API calls.  
 e. Additional S3 bucket policy, SNS policy and IAM role to make everything working properly.
 
 ### 3.2 Parameters
@@ -32,8 +32,8 @@ e. Additional S3 bucket policy, SNS policy and IAM role to make everything worki
 * TrailName - The CloudTrail name, the default value is management-events.
 
 ## 4. Manually Deployment
-You can also opt to deployment the componments manually due to maybe you want to make everything in control. This section will describe all the steps in details. According to your situation, you can start from any part.
-a. Create a trail from CloudTrail console or AWS CLI, specify a S3 bucket (create a new one or choose existing) to save the logs, meantime enable the SNS notification delivery.
+You can also opt to deployment the componments manually due to maybe you want to make everything in control. This section will describe all the steps in details. According to your situation, you can start from any part.  
+a. Create a trail from CloudTrail console or AWS CLI, specify a S3 bucket (create a new one or choose existing) to save the logs, meantime enable the SNS notification delivery.  
 b. Create a Lambda function and upload the deployment package. In the Environment variables of Configuration tab, create a variable which has 'cloudwatch_alarm_sns_topic' as Key, and the SNS topic ARN for CloudWatch alarm notification as Value. A new Lambda function role will be created as well. You have to change and add the following permissions in the role policy:
 * s3:GetObject permission of your CloudTrail log bucket:
 ```json
