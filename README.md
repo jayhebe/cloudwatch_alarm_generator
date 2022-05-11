@@ -65,7 +65,7 @@ c. If you want to fine-tune the threshold of the alarm, at the time of this writ
 * ec2_disk_usage_percentage - Self-explanation, the EC2 disk percentage in integer.
 * rds_cpu_threshold_percentage - Self-explanation, the RDS CPU percentage in integer.
 * rds_memory_threshold_percentage - Self-explanation, the RDS memory percetage, because it has to specify bytes in alarm, this value is in float format which 0.2 means 20%.
-* rds_storage_threshold_percentage - Self-explantation, the same as RDS memory percetage, which 0.2 means 20%.  
+* rds_storage_threshold_percentage - Self-explantation, the same as RDS memory percetage, which 0.2 means 20%.
 d. Use the SNS topic in step a. as trigger of the Lambda function.  
 e. Enjoy.  
 
@@ -78,12 +78,12 @@ For EC2, the following metrics are supported:
 * StatusCheckFailed_Instance
 * mem_used_percent
 * disk_used_percent  
-In order to make mem_used_percent and disk_used_percent working properly, please make sure the CloudWatch Agent is installed and at least the default configuration has been applied, otherwise the alarm will report with 'Insufficient Data'.  
+In order to make mem_used_percent and disk_used_percent working properly, please make sure the CloudWatch Agent is installed and at least the default configuration has been applied, otherwise the alarm will report with 'Insufficient Data'.
 For RDS, only MySQL and PostgreSQL engine with following metrics are supported:
 * CPUUtilization
 * FreeableMemory
 * FreeStorageSpace  
-More features are under development.  
+More features are under development.
 b. This solution is only used for region-wide which means that all resources should be located in the same region of the same AWS account. Cross-region or organization trail feature might be supported in the future.
 
 ## 6. Change Logs
