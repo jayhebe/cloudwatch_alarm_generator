@@ -89,6 +89,8 @@ More features are under development.
 
 b. This solution is only used for region-wide which means that all resources should be located in the same region of the same AWS account. Cross-region or organization trail feature might be supported in the future.
 
+c. This solution doesn't care about when you delete a resource. You have to remove the alarms by yourself, for now.
+
 ## 6. Change Logs
 | Date | Version | Author | Comments |
 | :----: | :----: | :----: | :----: |
