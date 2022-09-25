@@ -1,0 +1,14 @@
+{
+    "Services": [
+        {
+            "ServiceName": "ec2",
+            "ServiceEventName": "RunInstances",
+            "EnableAlarms": true
+        },
+        {
+            "ServiceName": "rds",
+            "ServiceEventName": "CreateDBInstance",
+            "EnableAlarms": true
+        }
+    ]
+}

@@ -1,0 +1,98 @@
+{
+    "ServiceName": "ec2",
+    "Alarms": [
+        {
+            "MetricName": "CPUUtilization",
+            "MetricNameSpace": "AWS/EC2",
+            "StatType": "Average",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": 85,
+            "Dimensions": [
+                {
+                    "Name": "InstanceId",
+                    "Value": "$instance_id"
+                }
+            ]
+        },
+        {
+            "MetricName": "StatusCheckFailed_System",
+            "MetricNameSpace": "AWS/EC2",
+            "StatType": "Maximum",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": 0,
+            "Dimensions": [
+                {
+                    "Name": "InstanceId",
+                    "Value": "$instance_id"
+                }
+            ]
+        },
+        {
+            "MetricName": "StatusCheckFailed_Instance",
+            "MetricNameSpace": "AWS/EC2",
+            "StatType": "Maximum",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": 0,
+            "Dimensions": [
+                {
+                    "Name": "InstanceId",
+                    "Value": "$instance_id"
+                }
+            ]
+        },
+        {
+            "MetricName": "mem_used_percent",
+            "MetricNameSpace": "CWAgent",
+            "StatType": "Average",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": 85,
+            "Dimensions": [
+                {
+                    "Name": "InstanceId",
+                    "Value": "$instance_id"
+                },
+                {
+                    "Name": "InstanceType",
+                    "Value": "$instance_type"
+                },
+                {
+                    "Name": "ImageId",
+                    "Value": "$image_id"
+                }
+            ]
+        },
+        {
+            "MetricName": "disk_used_percent",
+            "MetricNameSpace": "CWAgent",
+            "StatType": "Average",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": 80,
+            "Dimensions": [
+                {
+                    "Name": "InstanceId",
+                    "Value": "$instance_id"
+                },
+                {
+                    "Name": "InstanceType",
+                    "Value": "$instance_type"
+                },
+                {
+                    "Name": "ImageId",
+                    "Value": "$image_id"
+                },
+                {
+                    "Name": "device",
+                    "Value": "xvda1"
+                },
+                {
+                    "Name": "fstype",
+                    "Value": "xfs"
+                },
+                {
+                    "Name": "path",
+                    "Value": "/"
+                }
+            ]
+        }
+    ]
+}

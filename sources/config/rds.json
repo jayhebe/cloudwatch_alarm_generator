@@ -1,0 +1,56 @@
+{
+    "ServiceName": "rds",
+    "Alarms": [
+        {
+            "MetricName": "CPUUtilization",
+            "MetricNameSpace": "AWS/RDS",
+            "StatType": "Average",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": {
+                "percentage": 85,
+                "size": 1,
+                "conversion": 1
+            },
+            "Dimensions": [
+                {
+                    "Name": "DBInstanceIdentifier",
+                    "Value": "$db_instance_identifier"
+                }
+            ]
+        },
+        {
+            "MetricName": "FreeableMemory",
+            "MetricNameSpace": "AWS/RDS",
+            "StatType": "Average",
+            "ComparisonOp": "LessThanThreshold",
+            "Threshold": {
+                "percentage": 0.2,
+                "size": "$memory_size",
+                "conversion": 1048576
+            },
+            "Dimensions": [
+                {
+                    "Name": "DBInstanceIdentifier",
+                    "Value": "$db_instance_identifier"
+                }
+            ]
+        },
+        {
+            "MetricName": "FreeStorageSpace",
+            "MetricNameSpace": "AWS/RDS",
+            "StatType": "Average",
+            "ComparisonOp": "LessThanThreshold",
+            "Threshold": {
+                "percentage": 0.2,
+                "size": "$disk_size",
+                "conversion": 1073741824
+            },
+            "Dimensions": [
+                {
+                    "Name": "DBInstanceIdentifier",
+                    "Value": "$db_instance_identifier"
+                }
+            ]
+        }
+    ]
+}

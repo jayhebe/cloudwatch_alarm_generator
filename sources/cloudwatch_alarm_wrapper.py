@@ -1,5 +1,4 @@
 import boto3
-import logging
 
 STAT_AVERAGE = "Average"
 STAT_MAXIMUM = "Maximum"
@@ -29,17 +28,7 @@ class CloudWatchAlarmWrapper():
         self.comparison_op = comparison_op
         self.actions = actions
 
-        self.logger = logging.getLogger()
-
-    def create_metric_alarm(self):
-        self.logger.info(
-            "Creating alarm {} to track metric {}.{}".format(
-                self.alarm_name,
-                self.metric_namespace,
-                self.metric_name
-            )
-        )
-        
+    def create_metric_alarm(self):   
         cloudwatch = boto3.client('cloudwatch')
         alarm = cloudwatch.put_metric_alarm(
             Namespace=self.metric_namespace,
