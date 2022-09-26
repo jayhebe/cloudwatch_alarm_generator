@@ -16,7 +16,9 @@
                     "Name": "DBInstanceIdentifier",
                     "Value": "$db_instance_identifier"
                 }
-            ]
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
         },
         {
             "MetricName": "FreeableMemory",
@@ -33,7 +35,9 @@
                     "Name": "DBInstanceIdentifier",
                     "Value": "$db_instance_identifier"
                 }
-            ]
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
         },
         {
             "MetricName": "FreeStorageSpace",
@@ -50,7 +54,9 @@
                     "Name": "DBInstanceIdentifier",
                     "Value": "$db_instance_identifier"
                 }
-            ]
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
         }
     ]
 }

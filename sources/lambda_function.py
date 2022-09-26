@@ -58,7 +58,9 @@ def lambda_handler(event, context):
                         stat_type=alarm["StatType"],
                         threshold=alarm["Threshold"],
                         comparison_op=alarm["ComparisonOp"],
-                        actions=actions
+                        actions=actions,
+                        period=alarm["Period"],
+                        eval_periods=alarm["EvaluationPeriods"]
                     )
 
                     try:
@@ -118,7 +120,9 @@ def lambda_handler(event, context):
                                 alarm["Threshold"]["conversion"]
                             ),
                             comparison_op=alarm["ComparisonOp"],
-                            actions=actions
+                            actions=actions,
+                            period=alarm["Period"],
+                            eval_periods=alarm["EvaluationPeriods"]
                         )
 
                         try:

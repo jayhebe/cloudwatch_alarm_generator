@@ -12,7 +12,9 @@
                     "Name": "InstanceId",
                     "Value": "$instance_id"
                 }
-            ]
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
         },
         {
             "MetricName": "StatusCheckFailed_System",
@@ -25,7 +27,9 @@
                     "Name": "InstanceId",
                     "Value": "$instance_id"
                 }
-            ]
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
         },
         {
             "MetricName": "StatusCheckFailed_Instance",
@@ -38,7 +42,9 @@
                     "Name": "InstanceId",
                     "Value": "$instance_id"
                 }
-            ]
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
         },
         {
             "MetricName": "mem_used_percent",
@@ -59,7 +65,9 @@
                     "Name": "ImageId",
                     "Value": "$image_id"
                 }
-            ]
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
         },
         {
             "MetricName": "disk_used_percent",
@@ -92,7 +100,9 @@
                     "Name": "path",
                     "Value": "/"
                 }
-            ]
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
         }
     ]
 }

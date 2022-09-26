@@ -1,10 +1,5 @@
 import boto3
 
-STAT_AVERAGE = "Average"
-STAT_MAXIMUM = "Maximum"
-COMPARISON_OP_GREATER_THAN = "GreaterThanThreshold"
-COMPARISON_OP_LESS_THAN = "LessThanThreshold"
-
 class CloudWatchAlarmWrapper():
     def __init__(self, 
                  metric_namespace,
@@ -15,8 +10,8 @@ class CloudWatchAlarmWrapper():
                  threshold,
                  comparison_op,
                  actions,
-                 period=300,
-                 eval_periods=1):
+                 period,
+                 eval_periods):
         self.metric_namespace = metric_namespace
         self.metric_name = metric_name
         self.dimensions = dimensions
