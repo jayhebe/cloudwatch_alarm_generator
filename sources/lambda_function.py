@@ -103,8 +103,8 @@ def lambda_handler(event, context):
                         rds_alarms = rds_fp.read()
                     
                     rds_alarms = rds_alarms.replace("$db_instance_identifier", db_instance_identifier)
-                    rds_alarms = rds_alarms.replace("$memory_size", db_memory)
-                    rds_alarms = rds_alarms.replace("$disk_size", allocated_storage)
+                    rds_alarms = rds_alarms.replace("$memory_size", str(db_memory))
+                    rds_alarms = rds_alarms.replace("$disk_size", str(allocated_storage))
                     rds_alarms = json.loads(rds_alarms)["Alarms"]
 
                     for alarm in rds_alarms:
@@ -116,7 +116,7 @@ def lambda_handler(event, context):
                             stat_type=alarm["StatType"],
                             threshold=(
                                 alarm["Threshold"]["percentage"] * 
-                                alarm["Threshold"]["size"] * 
+                                int(alarm["Threshold"]["size"]) * 
                                 alarm["Threshold"]["conversion"]
                             ),
                             comparison_op=alarm["ComparisonOp"],
