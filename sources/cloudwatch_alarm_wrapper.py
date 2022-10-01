@@ -1,41 +1,47 @@
 import boto3
+import json
 
 class CloudWatchAlarmWrapper():
-    def __init__(self, 
-                 metric_namespace,
-                 metric_name,
-                 dimensions,
-                 alarm_name,
-                 stat_type,
-                 threshold,
-                 comparison_op,
-                 actions,
-                 period,
-                 eval_periods):
-        self.metric_namespace = metric_namespace
-        self.metric_name = metric_name
-        self.dimensions = dimensions
-        self.alarm_name = alarm_name
-        self.stat_type = stat_type
-        self.period = period
-        self.eval_periods = eval_periods
-        self.threshold = threshold
-        self.comparison_op = comparison_op
-        self.actions = actions
+    def __init__(self,
+                 service_name,
+                 value_mapping,
+                 config_file_path="config"):
 
-    def create_metric_alarm(self):   
+        self.value_mapping = value_mapping
+        self.config_file = "/".join([config_file_path, service_name + ".json"])
+
+    def render_alarm_template(self):
+        with open(self.config_file, "r") as config_fp:
+            alarm_template = config_fp.read()
+        
+        for key, value in self.value_mapping.items():
+            alarm_template = alarm_template.replace(key, value)
+
+        return json.loads(alarm_template)["Alarms"]
+        
+    def create_metric_alarm(self,
+                            metric_namespace,
+                            metric_name,
+                            dimensions,
+                            alarm_name,
+                            stat_type,
+                            threshold,
+                            comparison_op,
+                            actions,
+                            period,
+                            eval_periods):   
         cloudwatch = boto3.client('cloudwatch')
         alarm = cloudwatch.put_metric_alarm(
-            Namespace=self.metric_namespace,
-            MetricName=self.metric_name,
-            AlarmName=self.alarm_name,
-            Statistic=self.stat_type,
-            Period=self.period,
-            EvaluationPeriods=self.eval_periods,
-            Threshold=self.threshold,
-            ComparisonOperator=self.comparison_op,
-            Dimensions=self.dimensions,
-            AlarmActions=[self.actions]
+            Namespace=metric_namespace,
+            MetricName=metric_name,
+            AlarmName=alarm_name,
+            Statistic=stat_type,
+            Period=period,
+            EvaluationPeriods=eval_periods,
+            Threshold=threshold,
+            ComparisonOperator=comparison_op,
+            Dimensions=dimensions,
+            AlarmActions=[actions]
         )
     
         return alarm

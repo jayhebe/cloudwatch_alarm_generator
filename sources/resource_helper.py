@@ -7,10 +7,21 @@ def get_event_list(config_file_path="config/settings.json"):
         config = json.load(config_fp)
         services = config["Services"]
         for service in services:
-            if service["EnableAlarms"]:
-                event_list[service["ServiceName"]] = service["ServiceEventName"]
+            event_list[service["ServiceName"]] = service["ServiceEventName"]
 
     return event_list
+
+def is_enable_alarms(tag_list):
+    enable_alarms = "True"
+    for tag in tag_list:
+        if tag["key"] == "EnableAlarms":
+            enable_alarms = tag["value"]
+            break
+
+    if enable_alarms == "False":
+        return False
+    else:
+        return True
 
 # def get_ec2_info_by_id(instance_id):
 #     ec2 = boto3.resource("ec2")
