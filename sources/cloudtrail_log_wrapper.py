@@ -36,7 +36,7 @@ class CloudTrailLogWrapper():
         for content in self.log_content:
             events = json.loads(content)["Records"]
             for event in events:
-                logger.info("Event Name: {}".format(event["eventName"]))
+                logger.debug("Event Name: {}".format(event["eventName"]))
                 if event["eventName"] in event_list.values():
                     target_events.append((event["eventName"], event))
                 
