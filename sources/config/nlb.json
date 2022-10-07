@@ -1,0 +1,20 @@
+{
+    "ServiceName": "nlb",
+    "Alarms": [
+        {
+            "MetricName": "TCP_ELB_Reset_Count",
+            "MetricNameSpace": "AWS/NetworkELB",
+            "StatType": "Sum",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": 0,
+            "Dimensions": [
+                {
+                    "Name": "LoadBalancer",
+                    "Value": "$load_balancer_id"
+                }
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
+        }
+    ]
+}

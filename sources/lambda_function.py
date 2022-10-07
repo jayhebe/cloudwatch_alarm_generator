@@ -130,3 +130,55 @@ def lambda_handler(event, context):
                                 )
                             )
                             logger.error(e)
+
+        if ev[0] == event_list["elb"]:
+            tags = ev[1]["requestParameters"].get("tags")
+
+            if not tags or is_enable_alarms(tags):
+                load_balancer_type = ev[1]["responseElements"]["loadBalancers"][0]["type"]
+                load_balancer_name = ev[1]["responseElements"]["loadBalancers"][0]["loadBalancerName"]
+                load_balancer_arn = ev[1]["responseElements"]["loadBalancers"][0]["loadBalancerArn"]
+                load_balancer_id = load_balancer_arn.split("/", maxsplit=1)[1]
+
+                elb_value_mapping = {
+                    "$load_balancer_id": load_balancer_id
+                }
+
+                if load_balancer_type == "application":
+                    elb_alarm_wrapper = CloudWatchAlarmWrapper("alb", elb_value_mapping)
+                elif load_balancer_type == "network":
+                    elb_alarm_wrapper = CloudWatchAlarmWrapper("nlb", elb_value_mapping)
+                
+                elb_alarms = elb_alarm_wrapper.render_alarm_template()
+
+                for alarm in elb_alarms:
+                    try:
+                        elb_alarm_wrapper.create_metric_alarm(
+                            metric_namespace=alarm["MetricNameSpace"],
+                            metric_name=alarm["MetricName"],
+                            dimensions=alarm["Dimensions"],
+                            alarm_name="_".join([load_balancer_name, alarm["MetricName"]]),
+                            stat_type=alarm["StatType"],
+                            threshold=alarm["Threshold"],
+                            comparison_op=alarm["ComparisonOp"],
+                            actions=actions,
+                            period=alarm["Period"],
+                            eval_periods=alarm["EvaluationPeriods"]
+                        )
+
+                        logger.info(
+                            "Created alarm {} to track metric {}.{}".format(
+                                "_".join([load_balancer_name, alarm["MetricName"]]),
+                                alarm["MetricNameSpace"],
+                                alarm["MetricName"]
+                            )
+                        )
+                    except ClientError as e:
+                        logger.error(
+                            "Couldn't create alarm {} to metric {}.{}".format(
+                                "_".join([load_balancer_name, alarm["MetricName"]]),
+                                alarm["MetricNameSpace"],
+                                alarm["MetricName"]
+                            )
+                        )
+                        logger.error(e)

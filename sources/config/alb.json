@@ -1,0 +1,35 @@
+{
+    "ServiceName": "alb",
+    "Alarms": [
+        {
+            "MetricName": "HTTPCode_ELB_5XX_Count",
+            "MetricNameSpace": "AWS/ApplicationELB",
+            "StatType": "Sum",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": 0,
+            "Dimensions": [
+                {
+                    "Name": "LoadBalancer",
+                    "Value": "$load_balancer_id"
+                }
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
+        },
+        {
+            "MetricName": "HTTPCode_Target_5XX_Count",
+            "MetricNameSpace": "AWS/ApplicationELB",
+            "StatType": "Sum",
+            "ComparisonOp": "GreaterThanThreshold",
+            "Threshold": 0,
+            "Dimensions": [
+                {
+                    "Name": "LoadBalancer",
+                    "Value": "$load_balancer_id"
+                }
+            ],
+            "Period": 300,
+            "EvaluationPeriods": 1
+        }
+    ]
+}

@@ -95,3 +95,4 @@ c. This solution doesn't care about when you delete a resource. You have to remo
 | Date | Version | Author | Comments |
 | :----: | :----: | :----: | :----: |
 | 2022-05-10 | 0.1 | Jay | Initial version |
+| 2022-10-07 | 0.3 | Jay | Refactor the code and new features release |
