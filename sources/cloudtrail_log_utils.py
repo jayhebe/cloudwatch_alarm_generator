@@ -5,7 +5,7 @@ import gzip
 
 logger = logging.getLogger()
 
-class CloudTrailLogWrapper():
+class CloudTrailLogUtils():
     def __init__(self, s3_bucket, s3_object_key):
         self.s3_bucket = s3_bucket
         self.s3_object_key = s3_object_key

@@ -5,7 +5,7 @@ import os
 from resource_helper import (get_event_list,
                              get_memory_by_class,
                              is_enable_alarms)
-from cloudtrail_log_wrapper import CloudTrailLogWrapper
+from cloudtrail_log_utils import CloudTrailLogUtils
 from cloudwatch_alarm_wrapper import CloudWatchAlarmWrapper
 from botocore.exceptions import ClientError
 
@@ -21,7 +21,7 @@ def lambda_handler(event, context):
     s3_object_key = message["s3ObjectKey"]
 
     event_list = get_event_list()
-    log_wrapper = CloudTrailLogWrapper(s3_bucket, s3_object_key)
+    log_wrapper = CloudTrailLogUtils(s3_bucket, s3_object_key)
     target_events = log_wrapper.filter_trail_logs(event_list)
 
     for ev in target_events:
